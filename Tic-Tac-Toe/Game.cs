@@ -25,18 +25,18 @@ namespace TicTacToe
 		{
 			_playerNumber = 0;
 			Text = _windowText[0];
-			tableLayoutPanel.ColumnStyles.Clear();
-			tableLayoutPanel.RowStyles.Clear();
-			tableLayoutPanel.Controls.Clear();
-			tableLayoutPanel.RowCount = _boardSize + 1;
-			tableLayoutPanel.ColumnCount = _boardSize;
+			GamePanel.ColumnStyles.Clear();
+			GamePanel.RowStyles.Clear();
+			GamePanel.Controls.Clear();
+			GamePanel.RowCount = _boardSize + 1;
+			GamePanel.ColumnCount = _boardSize;
 
-			for (int i = 0; i < tableLayoutPanel.RowCount - 1; ++i)
+			for (int i = 0; i < GamePanel.RowCount - 1; ++i)
 			{
-				tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (tableLayoutPanel.Height - trackBar.Height) / _boardSize));
-				tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _boardSize));
+				GamePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (GamePanel.Height - BoardSizeBar.Height) / _boardSize));
+				GamePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _boardSize));
 
-				for (int j = 0; j < tableLayoutPanel.ColumnCount; ++j)
+				for (int j = 0; j < GamePanel.ColumnCount; ++j)
 				{
 					var btnCard = new Button
 					{
@@ -45,17 +45,16 @@ namespace TicTacToe
 						BackColor = SystemColors.Control,
 						Margin = new Padding(0)
 					};
-					btnCard.Click += pctrCard_Click;
+					btnCard.Click += BoardCellClicked;
 
 					btnCard.ContextMenuStrip = new ContextMenuStrip();
-					ToolStripMenuItem tsmi = new ToolStripMenuItem(Properties.Resources.Reset);
-					tsmi.Owner = btnCard.ContextMenuStrip;
+					var _ = new ToolStripMenuItem(Properties.Resources.Reset) {Owner = btnCard.ContextMenuStrip};
 					btnCard.ContextMenuStrip.Items[0].Click += ResetCellValue;
 
 					var gp = CreateDefaultEllipse();
 					btnCard.Region = new Region(gp);
 					btnCard.UseVisualStyleBackColor = true;
-					tableLayoutPanel.Controls.Add(btnCard);
+					GamePanel.Controls.Add(btnCard);
 				}
 			}
 		}
@@ -66,11 +65,11 @@ namespace TicTacToe
 			for (int i = 0; i < _boardSize; i++)
 			{
 				winner = true;
-				Control con = tableLayoutPanel.GetControlFromPosition(i, 0);
+				Control con = GamePanel.GetControlFromPosition(i, 0);
 				if ((int)con.Tag == -1)
 					winner = false;
 				for (int j = 0; j < _boardSize && winner; j++)
-					if ((int)con.Tag != (int)tableLayoutPanel.GetControlFromPosition(i, j).Tag)
+					if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(i, j).Tag)
 						winner = false;
 				if (winner)
 				{
@@ -81,11 +80,11 @@ namespace TicTacToe
 			for (int i = 0; i < _boardSize; i++)
 			{
 				winner = true;
-				Control con = tableLayoutPanel.GetControlFromPosition(0, i);
+				Control con = GamePanel.GetControlFromPosition(0, i);
 				if ((int)con.Tag == -1)
 					winner = false;
 				for (int j = 0; j < _boardSize && winner; j++)
-					if ((int)con.Tag != (int)tableLayoutPanel.GetControlFromPosition(j, i).Tag)
+					if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(j, i).Tag)
 						winner = false;
 				if (winner)
 				{
@@ -96,13 +95,13 @@ namespace TicTacToe
 			for (int i = 1; i < _boardSize; i++)
 			{
 				winner = true;
-				Control con = tableLayoutPanel.GetControlFromPosition(i, i);
+				Control con = GamePanel.GetControlFromPosition(i, i);
 				if ((int)con.Tag == -1)
 				{
 					winner = false;
 					break;
 				}
-				if ((int)con.Tag != (int)tableLayoutPanel.GetControlFromPosition(0, 0).Tag)
+				if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(0, 0).Tag)
 				{
 					winner = false;
 					break;
@@ -116,13 +115,13 @@ namespace TicTacToe
 			for (int i = _boardSize - 1; i >= 0; i--)
 			{
 				winner = true;
-				Control con = tableLayoutPanel.GetControlFromPosition(_boardSize - i - 1, i);
+				Control con = GamePanel.GetControlFromPosition(_boardSize - i - 1, i);
 				if ((int)con.Tag == -1)
 				{
 					winner = false;
 					break;
 				}
-				if ((int)con.Tag != (int)tableLayoutPanel.GetControlFromPosition(0, _boardSize - 1).Tag)
+				if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(0, _boardSize - 1).Tag)
 				{
 					winner = false;
 					break;
@@ -134,7 +133,7 @@ namespace TicTacToe
 				return;
 			}
 
-			foreach (Button btnCard in tableLayoutPanel.Controls)
+			foreach (Button btnCard in GamePanel.Controls)
 				if ((int)btnCard.Tag == -1)
 				{
 					return;
@@ -168,7 +167,7 @@ namespace TicTacToe
 			}
 		}
 
-		private void pctrCard_Click(Object sender, EventArgs e)
+		private void BoardCellClicked(object sender, EventArgs e)
 		{
 			Control c = sender as Control;
 			if ((int)c.Tag == -1)
@@ -193,19 +192,19 @@ namespace TicTacToe
 
 		private void BoardSizeChanged(object sender, EventArgs e)
 		{
-			_boardSize = trackBar.Value;
+			_boardSize = BoardSizeBar.Value;
 			StartGame();
 		}
 
-		private void tableLayoutPanel_SizeChanged(object sender, EventArgs e)
+		private void GamePanelSizeChanged(object sender, EventArgs e)
 		{
-			tableLayoutPanel.RowStyles.Clear();
-			for (int i = 0; i < tableLayoutPanel.RowCount - 1; ++i)
-				tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (tableLayoutPanel.Height - trackBar.Height) / _boardSize));
+			GamePanel.RowStyles.Clear();
+			for (int i = 0; i < GamePanel.RowCount - 1; ++i)
+				GamePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (GamePanel.Height - BoardSizeBar.Height) / _boardSize));
 
 			var gp = CreateDefaultEllipse();
 
-			foreach (Button c in tableLayoutPanel.Controls)
+			foreach (Button c in GamePanel.Controls)
 			{
 				if ((int)c.Tag != -1)
 				{
@@ -232,7 +231,7 @@ namespace TicTacToe
 				angle *= -1;
 			}
 
-			_right.AddArc(x, y, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize - 2 * x, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize - 2 * y, 90, angle);
+			_right.AddArc(x, y, (GamePanel.Width - BoardSizeBar.Height / 2) / _boardSize - 2 * x, (GamePanel.Height - 3 * BoardSizeBar.Height / 2) / _boardSize - 2 * y, 90, angle);
 			_upper.AddEllipse(size.Width * 1 / 5 + x, y, (size.Width - 3 * x) / 2, (size.Height - 3 * y) / 2);
 			_down.AddEllipse(size.Width * 1 / 5 + x, size.Height / 2 - y, (size.Width - 3 * x) / 2, (size.Height - 3 * y) / 2);
 			_small.AddEllipse(size.Width * 4 / 10 + x, size.Height * 2 / 9 + y, size.Width / 10, size.Height / 10);
@@ -253,7 +252,7 @@ namespace TicTacToe
 		private GraphicsPath CreateDefaultEllipse()
 		{
 			var gp = new GraphicsPath();
-			gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize + 3, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize + 3);
+			gp.AddEllipse(0, 0, (GamePanel.Width - BoardSizeBar.Height / 2) / _boardSize + 3, (GamePanel.Height - 3 * BoardSizeBar.Height / 2) / _boardSize + 3);
 			return gp;
 		}
 

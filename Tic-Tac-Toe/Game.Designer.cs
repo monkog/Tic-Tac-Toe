@@ -28,41 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-			this.trackBar = new System.Windows.Forms.TrackBar();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
+			this.GamePanel = new System.Windows.Forms.TableLayoutPanel();
+			this.BoardSizeBar = new System.Windows.Forms.TrackBar();
+			((System.ComponentModel.ISupportInitialize)(this.BoardSizeBar)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// tableLayoutPanel
+			// GamePanel
 			// 
-			this.tableLayoutPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel.ColumnCount = 3;
-			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-			this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-			this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-			this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel.Name = "tableLayoutPanel";
-			this.tableLayoutPanel.RowCount = 3;
-			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(484, 462);
-			this.tableLayoutPanel.TabIndex = 0;
-			this.tableLayoutPanel.SizeChanged += new System.EventHandler(this.tableLayoutPanel_SizeChanged);
+			this.GamePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.GamePanel.ColumnCount = 3;
+			this.GamePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.GamePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+			this.GamePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+			this.GamePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.GamePanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+			this.GamePanel.Location = new System.Drawing.Point(0, 0);
+			this.GamePanel.Name = "GamePanel";
+			this.GamePanel.RowCount = 3;
+			this.GamePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.GamePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.GamePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.GamePanel.Size = new System.Drawing.Size(484, 462);
+			this.GamePanel.TabIndex = 0;
+			this.GamePanel.SizeChanged += new System.EventHandler(this.GamePanelSizeChanged);
 			// 
-			// trackBar
+			// BoardSizeBar
 			// 
-			this.trackBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.trackBar.Location = new System.Drawing.Point(0, 417);
-			this.trackBar.Maximum = 5;
-			this.trackBar.Minimum = 2;
-			this.trackBar.Name = "trackBar";
-			this.trackBar.Size = new System.Drawing.Size(484, 45);
-			this.trackBar.TabIndex = 1;
-			this.trackBar.Value = 3;
-			this.trackBar.ValueChanged += new System.EventHandler(this.BoardSizeChanged);
+			this.BoardSizeBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.BoardSizeBar.Location = new System.Drawing.Point(0, 417);
+			this.BoardSizeBar.Maximum = 5;
+			this.BoardSizeBar.Minimum = 2;
+			this.BoardSizeBar.Name = "BoardSizeBar";
+			this.BoardSizeBar.Size = new System.Drawing.Size(484, 45);
+			this.BoardSizeBar.TabIndex = 1;
+			this.BoardSizeBar.Value = 3;
+			this.BoardSizeBar.ValueChanged += new System.EventHandler(this.BoardSizeChanged);
 			// 
 			// Game
 			// 
@@ -70,12 +70,12 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(484, 462);
-			this.Controls.Add(this.trackBar);
-			this.Controls.Add(this.tableLayoutPanel);
+			this.Controls.Add(this.BoardSizeBar);
+			this.Controls.Add(this.GamePanel);
 			this.MinimumSize = new System.Drawing.Size(500, 500);
 			this.Name = "Game";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.BoardSizeBar)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -83,7 +83,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.TrackBar trackBar;
+        private System.Windows.Forms.TableLayoutPanel GamePanel;
+        private System.Windows.Forms.TrackBar BoardSizeBar;
     }
 }
