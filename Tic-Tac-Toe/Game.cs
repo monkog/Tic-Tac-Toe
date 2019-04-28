@@ -12,6 +12,7 @@ namespace TicTacToe
 		private int _boardSize = 3;
 		private readonly string[] _windowText = { Properties.Resources.Yin, Properties.Resources.Yang };
 		private GraphicsPath _right, _upper, _down, _small, _small2;
+		private int[,] _gameBoard;
 
 		public Game()
 		{
@@ -24,6 +25,8 @@ namespace TicTacToe
 		private void StartGame()
 		{
 			_playerNumber = 0;
+			_gameBoard = CreateEmptyGameBoard();
+
 			Text = _windowText[0];
 			GamePanel.ColumnStyles.Clear();
 			GamePanel.RowStyles.Clear();
@@ -40,7 +43,6 @@ namespace TicTacToe
 				{
 					var btnCard = new Button
 					{
-						Tag = -1,
 						Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
 						BackColor = SystemColors.Control,
 						Margin = new Padding(0)
@@ -61,16 +63,15 @@ namespace TicTacToe
 
 		private void IsGameOver()
 		{
-			var gameBoard = GetGameBoardResult();
 			var winner = true;
 
 			for (int i = 0; i < _boardSize; i++)
 			{
 				winner = true;
-				if (gameBoard[i, 0] == -1)
+				if (_gameBoard[i, 0] == -1)
 					winner = false;
 				for (int j = 0; j < _boardSize && winner; j++)
-					if (gameBoard[i, 0] != gameBoard[i, j])
+					if (_gameBoard[i, 0] != _gameBoard[i, j])
 						winner = false;
 				if (winner)
 				{
@@ -81,10 +82,10 @@ namespace TicTacToe
 			for (int i = 0; i < _boardSize; i++)
 			{
 				winner = true;
-				if (gameBoard[0, i] == -1)
+				if (_gameBoard[0, i] == -1)
 					winner = false;
 				for (int j = 0; j < _boardSize && winner; j++)
-					if (gameBoard[0, i] != gameBoard[j, i])
+					if (_gameBoard[0, i] != _gameBoard[j, i])
 						winner = false;
 				if (winner)
 				{
@@ -95,12 +96,12 @@ namespace TicTacToe
 			for (int i = 1; i < _boardSize; i++)
 			{
 				winner = true;
-				if (gameBoard[i, i] == -1)
+				if (_gameBoard[i, i] == -1)
 				{
 					winner = false;
 					break;
 				}
-				if (gameBoard[i, i] != gameBoard[0, 0])
+				if (_gameBoard[i, i] != _gameBoard[0, 0])
 				{
 					winner = false;
 					break;
@@ -114,12 +115,12 @@ namespace TicTacToe
 			for (int i = _boardSize - 1; i >= 0; i--)
 			{
 				winner = true;
-				if (gameBoard[_boardSize - i - 1, i] == -1)
+				if (_gameBoard[_boardSize - i - 1, i] == -1)
 				{
 					winner = false;
 					break;
 				}
-				if (gameBoard[_boardSize - i - 1, i] != gameBoard[0, _boardSize - 1])
+				if (_gameBoard[_boardSize - i - 1, i] != _gameBoard[0, _boardSize - 1])
 				{
 					winner = false;
 					break;
@@ -131,11 +132,16 @@ namespace TicTacToe
 				return;
 			}
 
-			foreach (Button btnCard in GamePanel.Controls)
-				if ((int)btnCard.Tag == -1)
+			for (int i = 0; i < _boardSize; i++)
+			{
+				for (int j = 0; j < _boardSize; j++)
 				{
-					return;
+					if (_gameBoard[i, j] == -1)
+					{
+						return;
+					}
 				}
+			}
 
 			DialogResult dr = MessageBox.Show(Properties.Resources.Tie, null, MessageBoxButtons.YesNo);
 			if (dr == DialogResult.Yes)
@@ -144,15 +150,14 @@ namespace TicTacToe
 				Close();
 		}
 
-		private int[,] GetGameBoardResult()
+		private int[,] CreateEmptyGameBoard()
 		{
 			var gameBoard = new int[_boardSize, _boardSize];
 			for (var i = 0; i < _boardSize; i++)
 			{
 				for (var j = 0; j < _boardSize; j++)
 				{
-					var control = GamePanel.GetControlFromPosition(i, j);
-					gameBoard[i, j] = (int)control.Tag;
+					gameBoard[i, j] = -1;
 				}
 			}
 
@@ -173,9 +178,11 @@ namespace TicTacToe
 			ToolStripMenuItem c = sender as ToolStripMenuItem;
 			ContextMenuStrip ts = (ContextMenuStrip)c.Owner;
 			Control btn = ts.SourceControl;
-			if ((int)btn.Tag != -1)
+			var row = btn.TabIndex / _boardSize;
+			var column = btn.TabIndex % _boardSize;
+			if (_gameBoard[column, row] != -1)
 			{
-				btn.Tag = -1;
+				_gameBoard[column, row] = -1;
 				btn.Region = new Region(CreateDefaultEllipse());
 			}
 		}
@@ -183,7 +190,9 @@ namespace TicTacToe
 		private void BoardCellClicked(object sender, EventArgs e)
 		{
 			Control c = sender as Control;
-			if ((int)c.Tag == -1)
+			var row = c.TabIndex / _boardSize;
+			var column = c.TabIndex % _boardSize;
+			if (_gameBoard[column, row] == -1)
 			{
 				var gp = CreateDefaultEllipse();
 				ResetYinYangSegments();
@@ -195,7 +204,7 @@ namespace TicTacToe
 
 				c.Region = CreateYinYangPath(gp);
 
-				c.Tag = _playerNumber;
+				_gameBoard[column, row] = _playerNumber;
 				_playerNumber = (_playerNumber + 1) % 2;
 				Text = _windowText[_playerNumber];
 
@@ -219,14 +228,17 @@ namespace TicTacToe
 
 			foreach (Button c in GamePanel.Controls)
 			{
-				if ((int)c.Tag != -1)
+				var row = c.TabIndex / _boardSize;
+				var column = c.TabIndex % _boardSize;
+
+				if (_gameBoard[column, row] != -1)
 				{
 					ResetYinYangSegments();
 
 					int x = c.Width / 35;
 					int y = c.Height / 35;
 
-					InitializeYinYangSegments(x, y, c.Size, (int)c.Tag);
+					InitializeYinYangSegments(x, y, c.Size, _gameBoard[column, row]);
 
 					c.Region = CreateYinYangPath(gp);
 
