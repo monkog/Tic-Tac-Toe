@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
@@ -13,37 +7,37 @@ namespace WindowsFormsApplication1
 {
     public partial class Initializing : Form
     {
-        private int tick = 0;
-        Matrix rotateMatrix;
-        GraphicsPath right, upper, down, small, small2, gp;
-        Region yin;
+        private int _tick;
+        private Matrix _rotateMatrix;
+        private GraphicsPath _right, _upper, _down, _small, _small2, _gp;
+        private Region _yin;
 
         public Initializing()
         {
             InitializeComponent();
             timer.Start();
-            gp = new GraphicsPath();
-            gp.AddEllipse(0, 0, 256, 256);
+            _gp = new GraphicsPath();
+            _gp.AddEllipse(0, 0, 256, 256);
             BackColor = Color.Red;
 
-            right = new GraphicsPath();
-            upper = new GraphicsPath();
-            small = new GraphicsPath();
-            down = new GraphicsPath();
-            small2 = new GraphicsPath();
+            _right = new GraphicsPath();
+            _upper = new GraphicsPath();
+            _small = new GraphicsPath();
+            _down = new GraphicsPath();
+            _small2 = new GraphicsPath();
 
-            right.AddArc(3, 3, 250, 250, 90, -180);
-            upper.AddEllipse(60, 3, 125, 125);
-            down.AddEllipse(60, 128, 125, 125);
-            small.AddEllipse(115, 53, 25, 25);
-            small2.AddEllipse(115, 175, 25, 25);
+            _right.AddArc(3, 3, 250, 250, 90, -180);
+            _upper.AddEllipse(60, 3, 125, 125);
+            _down.AddEllipse(60, 128, 125, 125);
+            _small.AddEllipse(115, 53, 25, 25);
+            _small2.AddEllipse(115, 175, 25, 25);
 
-            Region = new Region(gp);
-            Region.Exclude(right);
-            Region.Union(upper);
-            Region.Exclude(down);
-            Region.Exclude(small);
-            Region.Union(small2);
+            Region = new Region(_gp);
+            Region.Exclude(_right);
+            Region.Union(_upper);
+            Region.Exclude(_down);
+            Region.Exclude(_small);
+            Region.Union(_small2);
 
             MainMenuStrip = null;
             ShowInTaskbar = false;
@@ -51,28 +45,28 @@ namespace WindowsFormsApplication1
             Show();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+		private void TimerTick(object sender, EventArgs e)
         {
-            if (tick >= 200)
+            if (_tick >= 200)
                 Close();
 
-            tick++;
+            _tick++;
 
-            rotateMatrix = new Matrix();
-            rotateMatrix.RotateAt(1, new PointF(128,128));
-            right.Transform(rotateMatrix);
-            upper.Transform(rotateMatrix);
-            down.Transform(rotateMatrix);
-            small2.Transform(rotateMatrix);
-            small.Transform(rotateMatrix);
+            _rotateMatrix = new Matrix();
+            _rotateMatrix.RotateAt(1, new PointF(128,128));
+            _right.Transform(_rotateMatrix);
+            _upper.Transform(_rotateMatrix);
+            _down.Transform(_rotateMatrix);
+            _small2.Transform(_rotateMatrix);
+            _small.Transform(_rotateMatrix);
 
-            yin = new Region(gp);
-            yin.Exclude(right);
-            yin.Union(upper);
-            yin.Exclude(down);
-            yin.Exclude(small);
-            yin.Union(small2);
-            Region = yin;
+            _yin = new Region(_gp);
+            _yin.Exclude(_right);
+            _yin.Union(_upper);
+            _yin.Exclude(_down);
+            _yin.Exclude(_small);
+            _yin.Union(_small2);
+            Region = _yin;
         }
     }
 }
