@@ -61,6 +61,15 @@ namespace TicTacToe.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game over.
+        /// </summary>
+        internal static string GameOver {
+            get {
+                return ResourceManager.GetString("GameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         internal static string Reset {

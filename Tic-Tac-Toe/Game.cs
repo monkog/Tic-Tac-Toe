@@ -75,7 +75,7 @@ namespace TicTacToe
 						winner = false;
 				if (winner)
 				{
-					GameOver();
+					GameOver(Properties.Resources.Win);
 					return;
 				}
 			}
@@ -89,7 +89,7 @@ namespace TicTacToe
 						winner = false;
 				if (winner)
 				{
-					GameOver();
+					GameOver(Properties.Resources.Win);
 					return;
 				}
 			}
@@ -109,7 +109,7 @@ namespace TicTacToe
 			}
 			if (winner)
 			{
-				GameOver();
+				GameOver(Properties.Resources.Win);
 				return;
 			}
 			for (int i = _boardSize - 1; i >= 0; i--)
@@ -128,7 +128,7 @@ namespace TicTacToe
 			}
 			if (winner)
 			{
-				GameOver();
+				GameOver(Properties.Resources.Win);
 				return;
 			}
 
@@ -143,11 +143,7 @@ namespace TicTacToe
 				}
 			}
 
-			DialogResult dr = MessageBox.Show(Properties.Resources.Tie, null, MessageBoxButtons.YesNo);
-			if (dr == DialogResult.Yes)
-				StartGame();
-			else
-				Close();
+			GameOver(Properties.Resources.Tie);
 		}
 
 		private int[,] CreateEmptyGameBoard()
@@ -164,10 +160,10 @@ namespace TicTacToe
 			return gameBoard;
 		}
 
-		private void GameOver()
+		private void GameOver(string gameResult)
 		{
-			DialogResult dr = MessageBox.Show(Properties.Resources.Win, null, MessageBoxButtons.YesNo);
-			if (dr == DialogResult.Yes)
+			var result = MessageBox.Show(gameResult, Properties.Resources.GameOver, MessageBoxButtons.YesNo);
+			if (result == DialogResult.Yes)
 				StartGame();
 			else
 				Close();
