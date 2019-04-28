@@ -7,6 +7,7 @@ namespace TicTacToe
 {
 	public partial class YinYangAnimation : Form
 	{
+		private const int LogoSize = 256;
 		private int _tick;
 		private readonly Matrix _rotateMatrix;
 		private GraphicsPath _excludedTail, _includedCircle, _excludedCircle, _smallExcluded, _smallIncluded, _gp;
@@ -20,7 +21,7 @@ namespace TicTacToe
 			CreateYinYangPath();
 
 			_rotateMatrix = new Matrix();
-			_rotateMatrix.RotateAt(1, new PointF(128, 128));
+			_rotateMatrix.RotateAt(1, new PointF(LogoSize / 2.0f, LogoSize / 2.0f));
 
 			Show();
 		}
@@ -28,7 +29,7 @@ namespace TicTacToe
 		private void InitializeYinYangSegments()
 		{
 			_gp = new GraphicsPath();
-			_gp.AddEllipse(0, 0, 256, 256);
+			_gp.AddEllipse(0, 0, LogoSize, LogoSize);
 
 			_excludedTail = new GraphicsPath();
 			_includedCircle = new GraphicsPath();
