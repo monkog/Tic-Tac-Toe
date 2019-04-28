@@ -188,22 +188,7 @@ namespace TicTacToe
 				int x = c.Width / 35;
 				int y = c.Height / 35;
 
-				if (_playerNumber == 1)
-				{
-					_right.AddArc(x, y, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize - 2 * x, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize - 2 * y, 90, -180);
-					_upper.AddEllipse(c.Size.Width * 1 / 5 + x, y, (c.Size.Width - 3 * x) / 2, (c.Size.Height - 3 * y) / 2);
-					_down.AddEllipse(c.Size.Width * 1 / 5 + x, c.Size.Height / 2 - y, (c.Size.Width - 3 * x) / 2, (c.Size.Height - 3 * y) / 2);
-					_small.AddEllipse(c.Size.Width * 4 / 10 + x, c.Size.Height * 2 / 9 + y, c.Size.Width / 10, c.Size.Height / 10);
-					_small2.AddEllipse(c.Size.Width * 4 / 10 + x, c.Size.Height * 6 / 9 + y, c.Size.Width / 10, c.Size.Height / 10);
-				}
-				else
-				{
-					_right.AddArc(x, y, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize - 2 * x, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize - 2 * y, 90, 180);
-					_upper.AddEllipse(c.Size.Width * 1 / 5 + x, y, (c.Size.Width - 3 * x) / 2, (c.Size.Height - 3 * y) / 2);
-					_down.AddEllipse(c.Size.Width * 1 / 5 + x, c.Size.Height / 2 - y, (c.Size.Width - 3 * x) / 2, (c.Size.Height - 3 * y) / 2);
-					_small.AddEllipse(c.Size.Width * 4 / 10 + x, c.Size.Height * 2 / 9 + y, c.Size.Width / 10, c.Size.Height / 10);
-					_small2.AddEllipse(c.Size.Width * 4 / 10 + x, c.Size.Height * 6 / 9 + y, c.Size.Width / 10, c.Size.Height / 10);
-				}
+				InitializeYinYangSegments(x, y, c.Size, _playerNumber);
 
 				c.Region = CreateYinYangPath(gp);
 
@@ -230,9 +215,9 @@ namespace TicTacToe
 			GraphicsPath gp = new GraphicsPath();
 			gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize + 3, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize + 3);
 
-			foreach (Button btnCard in tableLayoutPanel.Controls)
+			foreach (Button c in tableLayoutPanel.Controls)
 			{
-				if ((int)btnCard.Tag != -1)
+				if ((int)c.Tag != -1)
 				{
 					_right = new GraphicsPath();
 					_upper = new GraphicsPath();
@@ -240,32 +225,32 @@ namespace TicTacToe
 					_down = new GraphicsPath();
 					_small2 = new GraphicsPath();
 
-					int x = btnCard.Width / 35;
-					int y = btnCard.Height / 35;
+					int x = c.Width / 35;
+					int y = c.Height / 35;
 
-					if ((int)btnCard.Tag == 1)
-					{
-						_right.AddArc(x, y, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize - 2 * x, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize - 2 * y, 90, -180);
-						_upper.AddEllipse(btnCard.Size.Width * 1 / 5 + x, y, (btnCard.Size.Width - 3 * x) / 2, (btnCard.Size.Height - 3 * y) / 2);
-						_down.AddEllipse(btnCard.Size.Width * 1 / 5 + x, btnCard.Size.Height / 2 - y, (btnCard.Size.Width - 3 * x) / 2, (btnCard.Size.Height - 3 * y) / 2);
-						_small.AddEllipse(btnCard.Size.Width * 4 / 10 + x, btnCard.Size.Height * 2 / 9 + y, btnCard.Size.Width / 10, btnCard.Size.Height / 10);
-						_small2.AddEllipse(btnCard.Size.Width * 4 / 10 + x, btnCard.Size.Height * 6 / 9 + y, btnCard.Size.Width / 10, btnCard.Size.Height / 10);
-					}
-					else
-					{
-						_right.AddArc(x, y, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize - 2 * x, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize - 2 * y, 90, 180);
-						_upper.AddEllipse(btnCard.Size.Width * 1 / 5 + x, y, (btnCard.Size.Width - 2 * x) / 2, (btnCard.Size.Height - 2 * y) / 2);
-						_down.AddEllipse(btnCard.Size.Width * 1 / 5 + x, btnCard.Size.Height / 2 - y, (btnCard.Size.Width - 2 * x) / 2, (btnCard.Size.Height - 2 * y) / 2);
-						_small.AddEllipse(btnCard.Size.Width * 4 / 10 + x, btnCard.Size.Height * 2 / 9 + y, btnCard.Size.Width / 10, btnCard.Size.Height / 10);
-						_small2.AddEllipse(btnCard.Size.Width * 4 / 10 + x, btnCard.Size.Height * 6 / 9 + y, btnCard.Size.Width / 10, btnCard.Size.Height / 10);
-					}
-					
-					btnCard.Region = CreateYinYangPath(gp);
+					InitializeYinYangSegments(x, y, c.Size, (int)c.Tag);
+
+					c.Region = CreateYinYangPath(gp);
 
 				}
 				else
-					btnCard.Region = new Region(gp);
+					c.Region = new Region(gp);
 			}
+		}
+
+		private void InitializeYinYangSegments(int x, int y, Size size, int playerNumber)
+		{
+			var angle = 180;
+			if (playerNumber == 1)
+			{
+				angle *= -1;
+			}
+
+			_right.AddArc(x, y, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize - 2 * x, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize - 2 * y, 90, angle);
+			_upper.AddEllipse(size.Width * 1 / 5 + x, y, (size.Width - 3 * x) / 2, (size.Height - 3 * y) / 2);
+			_down.AddEllipse(size.Width * 1 / 5 + x, size.Height / 2 - y, (size.Width - 3 * x) / 2, (size.Height - 3 * y) / 2);
+			_small.AddEllipse(size.Width * 4 / 10 + x, size.Height * 2 / 9 + y, size.Width / 10, size.Height / 10);
+			_small2.AddEllipse(size.Width * 4 / 10 + x, size.Height * 6 / 9 + y, size.Width / 10, size.Height / 10);
 		}
 
 		private Region CreateYinYangPath(GraphicsPath gp)
