@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Okno_Glowne : Form
+    public partial class Game : Form
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
@@ -48,7 +48,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public Okno_Glowne()
+        public Game()
         {
             InitializeComponent();
             this.MinimumSize = new System.Drawing.Size(500, 500);

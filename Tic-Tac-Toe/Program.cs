@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Initializing());
-            Application.Run(new Okno_Glowne());
+            Application.Run(new Game());
         }
     }
 }

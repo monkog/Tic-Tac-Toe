@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1
 {
-    partial class Okno_Glowne
+    partial class Game
     {
         /// <summary>
         /// Required designer variable.

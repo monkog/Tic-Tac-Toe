@@ -50,19 +50,19 @@
     <Compile Include="Initializing.Designer.cs">
       <DependentUpon>Initializing.cs</DependentUpon>
     </Compile>
-    <Compile Include="Okno_Glowne.cs">
+    <Compile Include="Game.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Okno_Glowne.Designer.cs">
-      <DependentUpon>Okno_Glowne.cs</DependentUpon>
+    <Compile Include="Game.Designer.cs">
+      <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Initializing.resx">
       <DependentUpon>Initializing.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Okno_Glowne.resx">
-      <DependentUpon>Okno_Glowne.cs</DependentUpon>
+    <EmbeddedResource Include="Game.resx">
+      <DependentUpon>Game.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
