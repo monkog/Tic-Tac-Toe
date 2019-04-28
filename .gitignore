@@ -40,5 +40,6 @@ Icon
 bin/
 obj/
 *.suo
+packages/
 
 *.DotSettings.user
