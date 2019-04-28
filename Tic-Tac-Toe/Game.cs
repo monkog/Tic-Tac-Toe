@@ -2,52 +2,24 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
+using TicTacToe.MouseEventsHandling;
 
 namespace TicTacToe
 {
     public partial class Game : Form
     {
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
-
         private int _playerNumber;
         private int _boardSize = 3;
         private readonly string[] _windowText = { "Yin", "Yang" };
         private GraphicsPath _right, _upper, _down, _small, _small2;
         private Region _yin;
 
-        public class MouseChange : IMessageFilter
-        {
-            const int WM_LBUTTONDOWN = 0x0201;
-            const int WM_RBUTTONDOWN = 0x0204;
-            const int WM_RBUTTONUP = 0x0205;
-            const int WM_LBUTTONUP = 0x0202;
-
-            public bool PreFilterMessage(ref Message m)
-            {
-                var changed = true;
-
-                if (m.Msg == WM_LBUTTONDOWN)
-                    SendMessage(m.HWnd, WM_RBUTTONDOWN, m.WParam, m.LParam);
-                else if (m.Msg == WM_LBUTTONUP)
-                    SendMessage(m.HWnd, WM_RBUTTONUP, m.WParam, m.LParam);
-                else if (m.Msg == WM_RBUTTONDOWN)
-                    SendMessage(m.HWnd, WM_LBUTTONDOWN, m.WParam, m.LParam);
-                else if (m.Msg == WM_RBUTTONUP)
-                    SendMessage(m.HWnd, WM_LBUTTONUP, m.WParam, m.LParam);
-                else
-                    changed = false;
-                return changed;
-            }
-        }
-
         public Game()
         {
             InitializeComponent();
-            MinimumSize = new System.Drawing.Size(500, 500);
+            MinimumSize = new Size(500, 500);
             StartGame();
-            Application.AddMessageFilter(new MouseChange());
+            Application.AddMessageFilter(new MouseMessageHandler());
         }
 
         private void StartGame()

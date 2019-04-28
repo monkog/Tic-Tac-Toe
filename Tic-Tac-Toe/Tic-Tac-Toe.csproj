@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MouseEventsHandling\MouseEvent.cs" />
+    <Compile Include="MouseEventsHandling\MouseMessageHandler.cs" />
     <Compile Include="YinYangAnimation.cs">
       <SubType>Form</SubType>
     </Compile>
