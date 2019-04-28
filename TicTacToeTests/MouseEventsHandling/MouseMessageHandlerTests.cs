@@ -4,6 +4,7 @@ using TicTacToe.MouseEventsHandling;
 
 namespace TicTacToeTests.MouseEventsHandling
 {
+	[TestFixture]
 	public class MouseMessageHandlerTests
 	{
 		private MouseMessageHandler _unitUnderTest;

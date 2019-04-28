@@ -47,6 +47,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameBoardTests.cs" />
     <Compile Include="MouseEventsHandling\MouseMessageHandlerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
