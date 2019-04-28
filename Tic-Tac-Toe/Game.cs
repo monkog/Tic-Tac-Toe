@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
-namespace WindowsFormsApplication1
+namespace TicTacToe
 {
     public partial class Game : Form
     {

@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace TicTacToe
 {
-    partial class Initializing
+    partial class YinYangAnimation
     {
         /// <summary>
         /// Required designer variable.
@@ -41,8 +41,11 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Red;
 			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "Initializing";
+			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Initializing";
 			this.ResumeLayout(false);

@@ -7,8 +7,8 @@
     <ProjectGuid>{BFBC8FE3-41F8-420E-AA61-CFFAB6063D1C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsFormsApplication1</RootNamespace>
-    <AssemblyName>WindowsFormsApplication1</AssemblyName>
+    <RootNamespace>TicTacToe</RootNamespace>
+    <AssemblyName>TicTacToe</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Initializing.cs">
+    <Compile Include="YinYangAnimation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Initializing.Designer.cs">
-      <DependentUpon>Initializing.cs</DependentUpon>
+    <Compile Include="YinYangAnimation.Designer.cs">
+      <DependentUpon>YinYangAnimation.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs">
       <SubType>Form</SubType>
@@ -58,8 +58,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Initializing.resx">
-      <DependentUpon>Initializing.cs</DependentUpon>
+    <EmbeddedResource Include="YinYangAnimation.resx">
+      <DependentUpon>YinYangAnimation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
@@ -72,6 +72,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

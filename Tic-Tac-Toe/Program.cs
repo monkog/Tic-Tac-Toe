@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace TicTacToe
 {
 	internal static class Program
     {
@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Initializing());
+            Application.Run(new YinYangAnimation());
             Application.Run(new Game());
         }
     }
