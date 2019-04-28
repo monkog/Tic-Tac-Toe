@@ -50,10 +50,9 @@ namespace TicTacToe
 					btnCard.ContextMenuStrip = new ContextMenuStrip();
 					ToolStripMenuItem tsmi = new ToolStripMenuItem(Properties.Resources.Reset);
 					tsmi.Owner = btnCard.ContextMenuStrip;
-					btnCard.ContextMenuStrip.Items[0].Click += resetClick;
+					btnCard.ContextMenuStrip.Items[0].Click += ResetCellValue;
 
-					GraphicsPath gp = new GraphicsPath();
-					gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize);
+					var gp = CreateDefaultEllipse();
 					btnCard.Region = new Region(gp);
 					btnCard.UseVisualStyleBackColor = true;
 					tableLayoutPanel.Controls.Add(btnCard);
@@ -61,7 +60,7 @@ namespace TicTacToe
 			}
 		}
 
-		private void GameOver()
+		private void IsGameOver()
 		{
 			var winner = true;
 			for (int i = 0; i < _boardSize; i++)
@@ -75,7 +74,7 @@ namespace TicTacToe
 						winner = false;
 				if (winner)
 				{
-					won();
+					GameOver();
 					return;
 				}
 			}
@@ -90,7 +89,7 @@ namespace TicTacToe
 						winner = false;
 				if (winner)
 				{
-					won();
+					GameOver();
 					return;
 				}
 			}
@@ -111,7 +110,7 @@ namespace TicTacToe
 			}
 			if (winner)
 			{
-				won();
+				GameOver();
 				return;
 			}
 			for (int i = _boardSize - 1; i >= 0; i--)
@@ -131,7 +130,7 @@ namespace TicTacToe
 			}
 			if (winner)
 			{
-				won();
+				GameOver();
 				return;
 			}
 
@@ -148,7 +147,7 @@ namespace TicTacToe
 				Close();
 		}
 
-		private void won()
+		private void GameOver()
 		{
 			DialogResult dr = MessageBox.Show(Properties.Resources.Win, null, MessageBoxButtons.YesNo);
 			if (dr == DialogResult.Yes)
@@ -157,7 +156,7 @@ namespace TicTacToe
 				Close();
 		}
 
-		private void resetClick(Object sender, EventArgs e)
+		private void ResetCellValue(object sender, EventArgs e)
 		{
 			ToolStripMenuItem c = sender as ToolStripMenuItem;
 			ContextMenuStrip ts = (ContextMenuStrip)c.Owner;
@@ -165,9 +164,7 @@ namespace TicTacToe
 			if ((int)btn.Tag != -1)
 			{
 				btn.Tag = -1;
-				GraphicsPath gp = new GraphicsPath();
-				gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize);
-				btn.Region = new Region(gp);
+				btn.Region = new Region(CreateDefaultEllipse());
 			}
 		}
 
@@ -176,14 +173,8 @@ namespace TicTacToe
 			Control c = sender as Control;
 			if ((int)c.Tag == -1)
 			{
-				GraphicsPath gp = new GraphicsPath();
-				gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize + 3, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize + 3);
-
-				_right = new GraphicsPath();
-				_upper = new GraphicsPath();
-				_small = new GraphicsPath();
-				_down = new GraphicsPath();
-				_small2 = new GraphicsPath();
+				var gp = CreateDefaultEllipse();
+				ResetYinYangSegments();
 
 				int x = c.Width / 35;
 				int y = c.Height / 35;
@@ -196,11 +187,11 @@ namespace TicTacToe
 				_playerNumber = (_playerNumber + 1) % 2;
 				Text = _windowText[_playerNumber];
 
-				GameOver();
+				IsGameOver();
 			}
 		}
 
-		private void trackBar_ValueChanged(object sender, EventArgs e)
+		private void BoardSizeChanged(object sender, EventArgs e)
 		{
 			_boardSize = trackBar.Value;
 			StartGame();
@@ -212,18 +203,13 @@ namespace TicTacToe
 			for (int i = 0; i < tableLayoutPanel.RowCount - 1; ++i)
 				tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (tableLayoutPanel.Height - trackBar.Height) / _boardSize));
 
-			GraphicsPath gp = new GraphicsPath();
-			gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize + 3, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize + 3);
+			var gp = CreateDefaultEllipse();
 
 			foreach (Button c in tableLayoutPanel.Controls)
 			{
 				if ((int)c.Tag != -1)
 				{
-					_right = new GraphicsPath();
-					_upper = new GraphicsPath();
-					_small = new GraphicsPath();
-					_down = new GraphicsPath();
-					_small2 = new GraphicsPath();
+					ResetYinYangSegments();
 
 					int x = c.Width / 35;
 					int y = c.Height / 35;
@@ -262,6 +248,22 @@ namespace TicTacToe
 			yin.Exclude(_small);
 			yin.Union(_small2);
 			return yin;
+		}
+
+		private GraphicsPath CreateDefaultEllipse()
+		{
+			var gp = new GraphicsPath();
+			gp.AddEllipse(0, 0, (tableLayoutPanel.Width - trackBar.Height / 2) / _boardSize + 3, (tableLayoutPanel.Height - 3 * trackBar.Height / 2) / _boardSize + 3);
+			return gp;
+		}
+
+		private void ResetYinYangSegments()
+		{
+			_right = new GraphicsPath();
+			_upper = new GraphicsPath();
+			_small = new GraphicsPath();
+			_down = new GraphicsPath();
+			_small2 = new GraphicsPath();
 		}
 	}
 }

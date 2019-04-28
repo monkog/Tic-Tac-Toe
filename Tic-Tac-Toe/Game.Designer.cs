@@ -62,7 +62,7 @@
 			this.trackBar.Size = new System.Drawing.Size(484, 45);
 			this.trackBar.TabIndex = 1;
 			this.trackBar.Value = 3;
-			this.trackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChanged);
+			this.trackBar.ValueChanged += new System.EventHandler(this.BoardSizeChanged);
 			// 
 			// Game
 			// 
