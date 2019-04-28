@@ -35,12 +35,15 @@
 			// 
 			// GamePanel
 			// 
+			this.GamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.GamePanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.GamePanel.BackColor = System.Drawing.Color.Black;
 			this.GamePanel.ColumnCount = 3;
 			this.GamePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.GamePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
 			this.GamePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-			this.GamePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.GamePanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
 			this.GamePanel.Location = new System.Drawing.Point(0, 0);
 			this.GamePanel.Name = "GamePanel";
@@ -48,7 +51,7 @@
 			this.GamePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.GamePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.GamePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.GamePanel.Size = new System.Drawing.Size(484, 462);
+			this.GamePanel.Size = new System.Drawing.Size(484, 419);
 			this.GamePanel.TabIndex = 0;
 			this.GamePanel.SizeChanged += new System.EventHandler(this.GamePanelSizeChanged);
 			// 

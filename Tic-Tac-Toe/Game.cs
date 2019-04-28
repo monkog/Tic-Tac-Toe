@@ -8,9 +8,10 @@ namespace TicTacToe
 {
 	public partial class Game : Form
 	{
+		private const int YinYangMargin = 4;
 		private int _playerNumber;
 		private readonly string[] _windowText = { Properties.Resources.Yin, Properties.Resources.Yang };
-		private GraphicsPath _right, _upper, _down, _small, _small2;
+		private GraphicsPath _includedTail, _excludedCircle, _circleIncluded, _smallIncluded, _smallExcluded;
 		private GameBoard _gameBoard;
 
 		public Game()
@@ -24,7 +25,7 @@ namespace TicTacToe
 		private void StartGame()
 		{
 			_playerNumber = 0;
-			_gameBoard = new GameBoard(BoardSizeBar.Value, 0, 0);
+			_gameBoard = new GameBoard(BoardSizeBar.Value, GamePanel.Width, GamePanel.Height);
 
 			Text = _windowText[0];
 			GamePanel.ColumnStyles.Clear();
@@ -35,7 +36,7 @@ namespace TicTacToe
 
 			for (int i = 0; i < GamePanel.RowCount - 1; ++i)
 			{
-				GamePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (GamePanel.Height - BoardSizeBar.Height) / _gameBoard.Size));
+				GamePanel.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _gameBoard.Size));
 				GamePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _gameBoard.Size));
 
 				for (int j = 0; j < GamePanel.ColumnCount; ++j)
@@ -177,12 +178,7 @@ namespace TicTacToe
 			{
 				var gp = CreateDefaultEllipse();
 				ResetYinYangSegments();
-
-				int x = c.Width / 35;
-				int y = c.Height / 35;
-
-				InitializeYinYangSegments(x, y, c.Size, _playerNumber);
-
+				InitializeYinYangSegments(_playerNumber);
 				c.Region = CreateYinYangPath(gp);
 
 				_gameBoard[column, row] = _playerNumber;
@@ -200,10 +196,7 @@ namespace TicTacToe
 
 		private void GamePanelSizeChanged(object sender, EventArgs e)
 		{
-			GamePanel.RowStyles.Clear();
-			for (int i = 0; i < GamePanel.RowCount - 1; ++i)
-				GamePanel.RowStyles.Add(new RowStyle(SizeType.Absolute, (GamePanel.Height - BoardSizeBar.Height) / _gameBoard.Size));
-
+			_gameBoard.Resize(GamePanel.Width, GamePanel.Height);
 			var gp = CreateDefaultEllipse();
 
 			foreach (Button c in GamePanel.Controls)
@@ -214,21 +207,15 @@ namespace TicTacToe
 				if (_gameBoard[column, row] != -1)
 				{
 					ResetYinYangSegments();
-
-					int x = c.Width / 35;
-					int y = c.Height / 35;
-
-					InitializeYinYangSegments(x, y, c.Size, _gameBoard[column, row]);
-
+					InitializeYinYangSegments(_gameBoard[column, row]);
 					c.Region = CreateYinYangPath(gp);
-
 				}
 				else
 					c.Region = new Region(gp);
 			}
 		}
 
-		private void InitializeYinYangSegments(int x, int y, Size size, int playerNumber)
+		private void InitializeYinYangSegments(int playerNumber)
 		{
 			var angle = 180;
 			if (playerNumber == 1)
@@ -236,38 +223,43 @@ namespace TicTacToe
 				angle *= -1;
 			}
 
-			_right.AddArc(x, y, (GamePanel.Width - BoardSizeBar.Height / 2) / _gameBoard.Size - 2 * x, (GamePanel.Height - 3 * BoardSizeBar.Height / 2) / _gameBoard.Size - 2 * y, 90, angle);
-			_upper.AddEllipse(size.Width * 1 / 5 + x, y, (size.Width - 3 * x) / 2, (size.Height - 3 * y) / 2);
-			_down.AddEllipse(size.Width * 1 / 5 + x, size.Height / 2 - y, (size.Width - 3 * x) / 2, (size.Height - 3 * y) / 2);
-			_small.AddEllipse(size.Width * 4 / 10 + x, size.Height * 2 / 9 + y, size.Width / 10, size.Height / 10);
-			_small2.AddEllipse(size.Width * 4 / 10 + x, size.Height * 6 / 9 + y, size.Width / 10, size.Height / 10);
+			var bigCircleRadiusX = (_gameBoard.CellWidth - (3 * YinYangMargin)) / 2;
+			var bigCircleRadiusY = (_gameBoard.CellHeight - (3 * YinYangMargin)) / 2;
+			var smallCircleRadiusX = bigCircleRadiusX / 8;
+			var smallCircleRadiusY = bigCircleRadiusY / 8;
+
+			_includedTail.AddArc(YinYangMargin * 2, YinYangMargin * 2, bigCircleRadiusX * 2, bigCircleRadiusY * 2, 90, angle);
+			_excludedCircle.AddEllipse((_gameBoard.CellWidth - bigCircleRadiusX) / 2, YinYangMargin * 2, bigCircleRadiusX, bigCircleRadiusY);
+			_circleIncluded.AddEllipse((_gameBoard.CellWidth - bigCircleRadiusX) / 2, (_gameBoard.CellHeight + YinYangMargin) / 2, bigCircleRadiusX, bigCircleRadiusY);
+			_smallIncluded.AddEllipse((_gameBoard.CellWidth - bigCircleRadiusX / 2) / 2 + smallCircleRadiusX, bigCircleRadiusY / 2, smallCircleRadiusX * 2, smallCircleRadiusY * 2);
+			_smallExcluded.AddEllipse((_gameBoard.CellWidth - bigCircleRadiusX / 2) / 2 + smallCircleRadiusX, 3 * bigCircleRadiusY / 2, smallCircleRadiusX * 2, smallCircleRadiusY * 2);
 		}
 
 		private Region CreateYinYangPath(GraphicsPath gp)
 		{
 			var yin = new Region(gp);
-			yin.Exclude(_right);
-			yin.Union(_upper);
-			yin.Exclude(_down);
-			yin.Exclude(_small);
-			yin.Union(_small2);
+			yin.Exclude(_includedTail);
+			yin.Union(_excludedCircle);
+			yin.Exclude(_circleIncluded);
+			yin.Exclude(_smallIncluded);
+			yin.Union(_smallExcluded);
 			return yin;
 		}
 
 		private GraphicsPath CreateDefaultEllipse()
 		{
 			var gp = new GraphicsPath();
-			gp.AddEllipse(0, 0, (GamePanel.Width - BoardSizeBar.Height / 2) / _gameBoard.Size + 3, (GamePanel.Height - 3 * BoardSizeBar.Height / 2) / _gameBoard.Size + 3);
+			gp.AddEllipse(YinYangMargin, YinYangMargin, _gameBoard.Width / _gameBoard.Size - (2 * YinYangMargin), _gameBoard.Height / _gameBoard.Size - (2 * YinYangMargin));
 			return gp;
 		}
 
 		private void ResetYinYangSegments()
 		{
-			_right = new GraphicsPath();
-			_upper = new GraphicsPath();
-			_small = new GraphicsPath();
-			_down = new GraphicsPath();
-			_small2 = new GraphicsPath();
+			_includedTail = new GraphicsPath();
+			_excludedCircle = new GraphicsPath();
+			_smallIncluded = new GraphicsPath();
+			_circleIncluded = new GraphicsPath();
+			_smallExcluded = new GraphicsPath();
 		}
 	}
 }

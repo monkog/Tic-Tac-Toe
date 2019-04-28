@@ -4,9 +4,13 @@
 	{
 		public int Size { get; }
 
-		public int Width { get; }
+		public int Width { get; private set; }
 
-		public int Height { get; }
+		public int Height { get; private set; }
+
+		public int CellWidth { get { return Width / Size - 4; } }
+
+		public int CellHeight { get { return Height / Size - 4; } }
 
 		private readonly int[,] _gameBoard;
 
@@ -23,6 +27,12 @@
 		{
 			get { return _gameBoard[i, j]; }
 			set { _gameBoard[i, j] = value; }
+		}
+
+		public void Resize(int width, int height)
+		{
+			Width = width;
+			Height = height;
 		}
 
 		private int[,] CreateEmptyGameBoard()
