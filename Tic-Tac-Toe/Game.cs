@@ -48,7 +48,7 @@ namespace TicTacToe
 					btnCard.Click += BoardCellClicked;
 
 					btnCard.ContextMenuStrip = new ContextMenuStrip();
-					var _ = new ToolStripMenuItem(Properties.Resources.Reset) {Owner = btnCard.ContextMenuStrip};
+					var _ = new ToolStripMenuItem(Properties.Resources.Reset) { Owner = btnCard.ContextMenuStrip };
 					btnCard.ContextMenuStrip.Items[0].Click += ResetCellValue;
 
 					var gp = CreateDefaultEllipse();
@@ -61,15 +61,16 @@ namespace TicTacToe
 
 		private void IsGameOver()
 		{
+			var gameBoard = GetGameBoardResult();
 			var winner = true;
+
 			for (int i = 0; i < _boardSize; i++)
 			{
 				winner = true;
-				Control con = GamePanel.GetControlFromPosition(i, 0);
-				if ((int)con.Tag == -1)
+				if (gameBoard[i, 0] == -1)
 					winner = false;
 				for (int j = 0; j < _boardSize && winner; j++)
-					if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(i, j).Tag)
+					if (gameBoard[i, 0] != gameBoard[i, j])
 						winner = false;
 				if (winner)
 				{
@@ -80,11 +81,10 @@ namespace TicTacToe
 			for (int i = 0; i < _boardSize; i++)
 			{
 				winner = true;
-				Control con = GamePanel.GetControlFromPosition(0, i);
-				if ((int)con.Tag == -1)
+				if (gameBoard[0, i] == -1)
 					winner = false;
 				for (int j = 0; j < _boardSize && winner; j++)
-					if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(j, i).Tag)
+					if (gameBoard[0, i] != gameBoard[j, i])
 						winner = false;
 				if (winner)
 				{
@@ -95,13 +95,12 @@ namespace TicTacToe
 			for (int i = 1; i < _boardSize; i++)
 			{
 				winner = true;
-				Control con = GamePanel.GetControlFromPosition(i, i);
-				if ((int)con.Tag == -1)
+				if (gameBoard[i, i] == -1)
 				{
 					winner = false;
 					break;
 				}
-				if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(0, 0).Tag)
+				if (gameBoard[i, i] != gameBoard[0, 0])
 				{
 					winner = false;
 					break;
@@ -115,13 +114,12 @@ namespace TicTacToe
 			for (int i = _boardSize - 1; i >= 0; i--)
 			{
 				winner = true;
-				Control con = GamePanel.GetControlFromPosition(_boardSize - i - 1, i);
-				if ((int)con.Tag == -1)
+				if (gameBoard[_boardSize - i - 1, i] == -1)
 				{
 					winner = false;
 					break;
 				}
-				if ((int)con.Tag != (int)GamePanel.GetControlFromPosition(0, _boardSize - 1).Tag)
+				if (gameBoard[_boardSize - i - 1, i] != gameBoard[0, _boardSize - 1])
 				{
 					winner = false;
 					break;
@@ -144,6 +142,21 @@ namespace TicTacToe
 				StartGame();
 			else
 				Close();
+		}
+
+		private int[,] GetGameBoardResult()
+		{
+			var gameBoard = new int[_boardSize, _boardSize];
+			for (var i = 0; i < _boardSize; i++)
+			{
+				for (var j = 0; j < _boardSize; j++)
+				{
+					var control = GamePanel.GetControlFromPosition(i, j);
+					gameBoard[i, j] = (int)control.Tag;
+				}
+			}
+
+			return gameBoard;
 		}
 
 		private void GameOver()
