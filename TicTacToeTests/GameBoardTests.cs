@@ -13,7 +13,7 @@ namespace TicTacToeTests
 		[SetUp]
 		public void Initialize()
 		{
-			_size = 5;
+			_size = 3;
 			_unitUnderTest = new GameBoard(_size, 0, 0);
 		}
 
@@ -48,9 +48,147 @@ namespace TicTacToeTests
 		{
 			const int value = 10;
 
-			_unitUnderTest[2, 3] = value;
+			_unitUnderTest[2, 1] = value;
 
-			Assert.AreEqual(value, _unitUnderTest[2, 3]);
+			Assert.AreEqual(value, _unitUnderTest[2, 1]);
+		}
+
+		[Test]
+		public void HasWinningPosition_DefaultBoard_False()
+		{
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsFalse(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_FirstRowWinning_True()
+		{
+			_unitUnderTest[0, 0] = 1;
+			_unitUnderTest[1, 0] = 1;
+			_unitUnderTest[2, 0] = 1;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_SecondRowWinning_True()
+		{
+			_unitUnderTest[0, 1] = 1;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[2, 1] = 1;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_SecondColumnWinning_True()
+		{
+			_unitUnderTest[1, 0] = 1;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[1, 2] = 1;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_LastColumnWinning_True()
+		{
+			_unitUnderTest[_size - 1, 0] = 1;
+			_unitUnderTest[_size - 1, 1] = 1;
+			_unitUnderTest[_size - 1, 2] = 1;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_DiagonalWinning_True()
+		{
+			_unitUnderTest[0, 0] = 1;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[2, 2] = 1;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_OtherDiagonalWinning_True()
+		{
+			_unitUnderTest[2, 0] = 1;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[0, 2] = 1;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void HasWinningPosition_RandomValues_False()
+		{
+			_unitUnderTest[0, 0] = 1;
+			_unitUnderTest[0, 1] = 0;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[2, 1] = 1;
+			_unitUnderTest[2, 1] = 0;
+			_unitUnderTest[2, 2] = 0;
+
+			var result = _unitUnderTest.HasWinningPosition();
+
+			Assert.False(result);
+		}
+
+		[Test]
+		public void CanContinueGame_DefaultBoard_True()
+		{
+			var result = _unitUnderTest.CanContinueGame;
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void CanContinueGame_OneValueNotSet_True()
+		{
+			_unitUnderTest[0, 0] = 1;
+			_unitUnderTest[0, 1] = 0;
+			_unitUnderTest[0, 2] = 0;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[1, 2] = 1;
+			_unitUnderTest[2, 0] = 1;
+			_unitUnderTest[2, 1] = 1;
+			_unitUnderTest[2, 2] = 0;
+
+			var result = _unitUnderTest.CanContinueGame;
+
+			Assert.IsTrue(result);
+		}
+
+		[Test]
+		public void CanContinueGame_AllValuesSet_False()
+		{
+			_unitUnderTest[0, 0] = 1;
+			_unitUnderTest[0, 1] = 0;
+			_unitUnderTest[0, 2] = 0;
+			_unitUnderTest[1, 0] = 1;
+			_unitUnderTest[1, 1] = 1;
+			_unitUnderTest[1, 2] = 1;
+			_unitUnderTest[2, 0] = 1;
+			_unitUnderTest[2, 1] = 1;
+			_unitUnderTest[2, 2] = 0;
+
+			var result = _unitUnderTest.CanContinueGame;
+
+			Assert.IsFalse(result);
 		}
 	}
 }

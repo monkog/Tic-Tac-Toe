@@ -63,87 +63,10 @@ namespace TicTacToe
 
 		private void IsGameOver()
 		{
-			var winner = true;
-
-			for (int i = 0; i < _gameBoard.Size; i++)
-			{
-				winner = true;
-				if (_gameBoard[i, 0] == -1)
-					winner = false;
-				for (int j = 0; j < _gameBoard.Size && winner; j++)
-					if (_gameBoard[i, 0] != _gameBoard[i, j])
-						winner = false;
-				if (winner)
-				{
-					GameOver(Properties.Resources.Win);
-					return;
-				}
-			}
-			for (int i = 0; i < _gameBoard.Size; i++)
-			{
-				winner = true;
-				if (_gameBoard[0, i] == -1)
-					winner = false;
-				for (int j = 0; j < _gameBoard.Size && winner; j++)
-					if (_gameBoard[0, i] != _gameBoard[j, i])
-						winner = false;
-				if (winner)
-				{
-					GameOver(Properties.Resources.Win);
-					return;
-				}
-			}
-			for (int i = 1; i < _gameBoard.Size; i++)
-			{
-				winner = true;
-				if (_gameBoard[i, i] == -1)
-				{
-					winner = false;
-					break;
-				}
-				if (_gameBoard[i, i] != _gameBoard[0, 0])
-				{
-					winner = false;
-					break;
-				}
-			}
-			if (winner)
-			{
+			if (_gameBoard.HasWinningPosition())
 				GameOver(Properties.Resources.Win);
-				return;
-			}
-			for (int i = _gameBoard.Size - 1; i >= 0; i--)
-			{
-				winner = true;
-				if (_gameBoard[_gameBoard.Size - i - 1, i] == -1)
-				{
-					winner = false;
-					break;
-				}
-				if (_gameBoard[_gameBoard.Size - i - 1, i] != _gameBoard[0, _gameBoard.Size - 1])
-				{
-					winner = false;
-					break;
-				}
-			}
-			if (winner)
-			{
-				GameOver(Properties.Resources.Win);
-				return;
-			}
-
-			for (int i = 0; i < _gameBoard.Size; i++)
-			{
-				for (int j = 0; j < _gameBoard.Size; j++)
-				{
-					if (_gameBoard[i, j] == -1)
-					{
-						return;
-					}
-				}
-			}
-
-			GameOver(Properties.Resources.Tie);
+			if (!_gameBoard.CanContinueGame)
+				GameOver(Properties.Resources.Tie);
 		}
 
 		private void GameOver(string gameResult)
