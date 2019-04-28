@@ -59,5 +59,50 @@ namespace TicTacToe.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tie. Play again?.
+        /// </summary>
+        internal static string Tie {
+            get {
+                return ResourceManager.GetString("Tie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You won!!! Play again?.
+        /// </summary>
+        internal static string Win {
+            get {
+                return ResourceManager.GetString("Win", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yang.
+        /// </summary>
+        internal static string Yang {
+            get {
+                return ResourceManager.GetString("Yang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yin.
+        /// </summary>
+        internal static string Yin {
+            get {
+                return ResourceManager.GetString("Yin", resourceCulture);
+            }
+        }
     }
 }

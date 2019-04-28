@@ -10,7 +10,7 @@ namespace TicTacToe
     {
         private int _playerNumber;
         private int _boardSize = 3;
-        private readonly string[] _windowText = { "Yin", "Yang" };
+        private readonly string[] _windowText = { Properties.Resources.Yin, Properties.Resources.Yang };
         private GraphicsPath _right, _upper, _down, _small, _small2;
         private Region _yin;
 
@@ -18,6 +18,7 @@ namespace TicTacToe
         {
             InitializeComponent();
             StartGame();
+
             Application.AddMessageFilter(new MouseMessageHandler());
         }
 
@@ -48,7 +49,7 @@ namespace TicTacToe
                     btnCard.Click += pctrCard_Click;
 
                     btnCard.ContextMenuStrip = new ContextMenuStrip();
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem("Reset");
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(Properties.Resources.Reset);
                     tsmi.Owner = btnCard.ContextMenuStrip;
                     btnCard.ContextMenuStrip.Items[0].Click += resetClick;
 
@@ -143,7 +144,7 @@ namespace TicTacToe
                 }
             if (tie)
             {
-                DialogResult dr = MessageBox.Show("Tie. Play again?", null, MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show(Properties.Resources.Tie, null, MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                     StartGame();
                 else
@@ -153,7 +154,7 @@ namespace TicTacToe
 
         private void won()
         {
-            DialogResult dr = MessageBox.Show("You won!!! Play again?", null, MessageBoxButtons.YesNo);
+            DialogResult dr = MessageBox.Show(Properties.Resources.Win, null, MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
                 StartGame();
             else
