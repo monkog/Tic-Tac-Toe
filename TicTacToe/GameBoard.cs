@@ -8,10 +8,6 @@
 
 		public int Height { get; private set; }
 
-		public int CellWidth { get { return Width / Size - 4; } }
-
-		public int CellHeight { get { return Height / Size - 4; } }
-
 		public bool CanContinueGame
 		{
 			get

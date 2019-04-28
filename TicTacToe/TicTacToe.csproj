@@ -47,6 +47,7 @@
     <Compile Include="GameBoard.cs" />
     <Compile Include="MouseEventsHandling\MouseEvent.cs" />
     <Compile Include="MouseEventsHandling\MouseMessageHandler.cs" />
+    <Compile Include="YinYang.cs" />
     <Compile Include="YinYangAnimation.cs">
       <SubType>Form</SubType>
     </Compile>
