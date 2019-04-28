@@ -17,7 +17,6 @@ namespace TicTacToe
         public Game()
         {
             InitializeComponent();
-            MinimumSize = new Size(500, 500);
             StartGame();
             Application.AddMessageFilter(new MouseMessageHandler());
         }
