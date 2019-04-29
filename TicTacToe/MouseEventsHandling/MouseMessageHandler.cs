@@ -9,6 +9,11 @@ namespace TicTacToe.MouseEventsHandling
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		private static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
+		/// <summary>
+		/// Sends a message containing the mouse event that occured.
+		/// </summary>
+		/// <param name="message">Message containing mouse event.</param>
+		/// <returns>True if the mouse event was known, false otherwise.</returns>
 		public bool PreFilterMessage(ref Message message)
 		{
 			switch (message.Msg)

@@ -10,6 +10,14 @@ namespace TicTacToe
 		private const int Margin = 4;
 		private static GraphicsPath _includedTail, _excludedCircle, _circleIncluded, _smallIncluded, _smallExcluded;
 
+		/// <summary>
+		/// Draws the ☯️ (Yin Yang) sign.
+		/// </summary>
+		/// <param name="width">Width of the available space.</param>
+		/// <param name="height">Height of the available space.</param>
+		/// <param name="division">The number of ☯️ to draw.</param>
+		/// <param name="isReverse">Value determining whether the ☯️ should be drawn in reverse.</param>
+		/// <returns>Returns the constructed region containing ☯️.</returns>
 		public static Region Draw(int width, int height, int division, bool isReverse)
 		{
 			var cellWidth = width / division;
@@ -20,6 +28,13 @@ namespace TicTacToe
 			return CreateYinYangPath(cellWidth, cellHeight);
 		}
 
+		/// <summary>
+		/// Draws an empty ellipse.
+		/// </summary>
+		/// <param name="width">Width of the available space.</param>
+		/// <param name="height">Height of the available space.</param>
+		/// <param name="division">The number of ellipses to draw.</param>
+		/// <returns>Returns the constructed region containing ellipse.</returns>
 		public static Region DrawEmpty(int width, int height, int division)
 		{
 			var path = new GraphicsPath();

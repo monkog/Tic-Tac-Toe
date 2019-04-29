@@ -2,12 +2,25 @@
 {
 	public class GameBoard
 	{
+		/// <summary>
+		/// Gets the number of rows and columns on the board.
+		/// </summary>
 		public int Size { get; }
 
+		/// <summary>
+		/// Gets the width od the board in pixels.
+		/// </summary>
 		public int Width { get; private set; }
 
+		/// <summary>
+		/// Gets the height of the board in pixels.
+		/// </summary>
 		public int Height { get; private set; }
 
+		/// <summary>
+		/// Gets a value indicating whether the game can be continued.
+		/// Returns true if there is at least one field that has not been taken by the user.
+		/// </summary>
 		public bool CanContinueGame
 		{
 			get
@@ -41,12 +54,21 @@
 			set { _gameBoard[i, j] = value; }
 		}
 
+		/// <summary>
+		/// Resizes the game board.
+		/// </summary>
+		/// <param name="width">New width of the board.</param>
+		/// <param name="height">New height of the board.</param>
 		public void Resize(int width, int height)
 		{
 			Width = width;
 			Height = height;
 		}
 
+		/// <summary>
+		/// Checks whether there is a winning position in a game.
+		/// </summary>
+		/// <returns>True if there is a winning position, false otherwise.</returns>
 		public bool HasWinningPosition()
 		{
 			// Check all rows and columns.

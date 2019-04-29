@@ -1,5 +1,8 @@
 ﻿namespace TicTacToe.MouseEventsHandling
 {
+	/// <summary>
+	/// Lists the available (known) mouse events to handle.
+	/// </summary>
 	public class MouseEvent
 	{
 		public const int LeftButtonDown = 0x0201;
